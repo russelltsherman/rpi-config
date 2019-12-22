@@ -1,0 +1,40 @@
+#!/usr/bin/env bash
+
+# find script location
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+# shellcheck source=./_bashlib.sh
+source "${DIR}/_bashlib.sh"
+
+hifiberry="$1"
+
+[ -e "${CFG_FILE}" ] || touch "${CFG_FILE}"
+
+if [ "${hifiberry}" = "1" ] ; then
+  # DAC/DAC+ Light
+  file_writeln "${CFG_FILE}" 'dtoverlay=hifiberry-dac'
+fi
+
+if [ "${hifiberry}" = "2" ] ; then
+  # DAC+ standard/pro
+  file_writeln "${CFG_FILE}" 'dtoverlay=hifiberry-dacplus'
+fi
+
+if [ "${hifiberry}" = "3" ] ; then
+  # Digi/Digi+
+  file_writeln "${CFG_FILE}" 'dtoverlay=hifiberry-digi'
+fi
+
+if [ "${hifiberry}" = "4" ] ; then
+  # Amp/Amp+
+  file_writeln "${CFG_FILE}" 'dtoverlay=hifiberry-amp'
+fi
+
+config=/etc/asound.conf
+rm -rf "${config}"
+touch "${config}"
+echo "pcm.!default  {
+ type hw card 0
+}
+ctl.!default {
+ type hw card 0
+}" > "${config}"

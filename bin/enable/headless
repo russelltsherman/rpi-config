@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+
+# find script location
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+# shellcheck source=./_bashlib.sh
+source "${DIR}/_bashlib.sh"
+
+set_config_var gpu_mem=16 1 "${CFG_FILE}"

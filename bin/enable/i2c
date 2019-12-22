@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+
+# find script location
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+# shellcheck source=./_bashlib.sh
+source "${DIR}/_bashlib.sh"
+
+[ -e "${CFG_FILE}" ] || touch "${CFG_FILE}"
+
+file_writeln /etc/modules 'i2c-dev'
+file_writeln /etc/modules 'i2c-bcm2708'
+
+sed /etc/modules -i -e "s/^#i2c-dev/i2c-dev/"
+sed /etc/modules -i -e "s/^#i2c-bcm2708/i2c-bcm2708/"
+
+set_config_var dtparam=i2c_arm 1 "${CFG_FILE}"

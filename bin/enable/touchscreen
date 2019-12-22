@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+
+# find script location
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+# shellcheck source=./_bashlib.sh
+source "${DIR}/_bashlib.sh"
+
+[ -e "${CFG_FILE}" ] || touch "${CFG_FILE}"
+
+set_config_var lcd_rotate 1 "${CFG_FILE}"
